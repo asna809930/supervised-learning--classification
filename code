@@ -1,0 +1,31 @@
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score,classification_report,confusion_matrix,recall_score,precision_score
+diabetes=load_diabetes()
+x=diabetes.data
+y=diabetes.target
+print(x)
+print(y)
+y_binary=(y>np.median(y)).astype(int)
+y_binary
+x_train,x_test,y_train,y_test=train_test_split(x,y_binary,test_size=0.2,random_state=42)
+model=LogisticRegression()
+model.fit(x_train,y_train)
+  y_pred=model.predict(x_test)
+accuracy=accuracy_score(y_test,y_pred)
+accuracy
+print("accuracy:{:.2f}%".format(accuracy*100))
+classification=classification_report(y_test,y_pred)
+print(classification)
+confusion=confusion_matrix(y_test,y_pred)
+print(confusion)
+recall=recall_score(y_test,y_pred)
+print(recall)
+precision=precision_score(y_test,y_pred)
+print(precision)
